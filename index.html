@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#101827"><meta name="description" content="ULTRA MUSIC AI mobile song prompt maker">
+<link rel="manifest" href="manifest.webmanifest">
+<title>ULTRA MUSIC AI</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#0a1020;color:#f7f8fc;font:16px system-ui,Arial}
+header{padding:22px 16px;text-align:center;background:#111d32;border-bottom:1px solid #31415d}
+h1{margin:0;color:#f4c65e;font-size:25px;letter-spacing:1px}header p{margin:5px 0 0;color:#afbdd1;font-size:13px}
+main{max-width:680px;margin:auto;padding:14px}.card{background:#151f33;border:1px solid #2c3c58;border-radius:16px;padding:15px;margin-bottom:13px}
+h2{font-size:17px;color:#f4c65e;margin:0 0 12px}label{display:block;color:#afbdd1;font-size:13px;margin:11px 0 5px}
+input,select,textarea{width:100%;padding:12px;border:1px solid #40516e;border-radius:10px;background:#0d1729;color:#fff;font:inherit}
+textarea{min-height:90px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+button{padding:12px;border:0;border-radius:10px;font-weight:700;font-size:14px}.gold{background:#f4c65e;color:#211907;width:100%;margin-top:13px}.dark{background:#293b59;color:#fff;width:100%;margin-top:8px}
+.out{white-space:pre-wrap;background:#0d1729;border:1px solid #40516e;border-radius:10px;padding:12px;font-size:13px;line-height:1.55;min-height:65px}
+.small{font-size:12px;color:#afbdd1;line-height:1.55}.status{color:#a8e6bd;font-size:12px;margin-top:8px}
+@media(max-width:400px){.grid{grid-template-columns:1fr}}
+</style></head>
+<body>
+<header><h1>ULTRA MUSIC AI</h1><p>AI Song Maker • Android Mobile Edition</p></header>
+<main>
+<section class="card">
+<h2>🎼 नया गाना बनाएं</h2>
+<label>गाने का विषय</label><input id="topic" placeholder="जैसे: महाकाल का भजन">
+<div class="grid">
+<div><label>अवधि</label><select id="duration"><option>3 मिनट</option><option selected>6 मिनट</option><option>9 मिनट</option><option>12 मिनट</option><option>15 मिनट</option><option>18 मिनट</option><option>30 मिनट</option></select></div>
+<div><label>आवाज</label><select id="voice"><option>दमदार पुरुष आवाज</option><option>मधुर महिला आवाज</option><option>पुरुष-महिला युगल</option><option>समूह गायन</option></select></div>
+<div><label>शैली</label><select id="style"><option>Devotional DJ EDM</option><option>Traditional Bhajan</option><option>Shiv Tandav EDM</option><option>Indian Folk</option><option>Sufi / Nirgun</option><option>Bollywood Romantic</option><option>Instrumental</option></select></div>
+<div><label>साउंड</label><select id="sound"><option>Powerful Bass + Crystal Clear Treble</option><option>Soft and Melodious</option><option>Cinematic and Grand</option><option>Natural Live Instruments</option></select></div>
+</div>
+<label>खास निर्देश</label><textarea id="extra" placeholder="वाद्य, राग, भाव, गति आदि..."></textarea>
+<button class="gold" onclick="generate()">✨ Lyrics और Music Prompt बनाएं</button>
+<div id="msg" class="status" aria-live="polite"></div>
+</section>
+<section class="card"><h2>✍️ Lyrics Prompt</h2><div id="lyrics" class="out">आपका Lyrics Prompt यहाँ आएगा।</div><button class="dark" onclick="copy('lyrics')">Lyrics कॉपी करें</button></section>
+<section class="card"><h2>🎧 Music Prompt</h2><div id="music" class="out">आपका Music Prompt यहाँ आएगा।</div><button class="dark" onclick="copy('music')">Music Prompt कॉपी करें</button></section>
+<section class="card"><h2>🎵 गाना Generate करें</h2><p class="small">यह संस्करण आपके लिए prompts तैयार करता है। वास्तविक ऑडियो/MP3 बनाने के लिए Suno जैसी बाहरी AI सेवा से कनेक्शन जरूरी है। यह ऐप अभी अपने आप गाना generate नहीं करता।</p><button class="gold" onclick="window.open('https://suno.com/create','_blank')">Suno खोलें ↗</button></section>
+<section class="card"><h2>📲 मोबाइल में इंस्टॉल करें</h2><p class="small">इस ऐप को इंस्टॉल करने के लिए इसे HTTPS वेबसाइट पर प्रकाशित करना होगा। फिर Chrome मेन्यू में “Install app” या “Add to Home screen” चुनें।</p><button class="dark" id="install" hidden>Install App</button><p class="small">v0.2 • PWA starter</p></section>
+</main>
+<script>
+function generate(){
+ const topic=document.getElementById('topic').value.trim()||'भक्ति गीत';
+ const duration=document.getElementById('duration').value,voice=document.getElementById('voice').value;
+ const style=document.getElementById('style').value,sound=document.getElementById('sound').value;
+ const extra=document.getElementById('extra').value.trim();
+ document.getElementById('lyrics').textContent=`${topic} पर ${duration} का पूरा, भावपूर्ण और गेय गीत लिखें। आवाज: ${voice}। स्पष्ट मुखड़ा और अंतरे रखें। मुखड़े को कई बार दोहराएं ताकि गीत यादगार बने। शब्द सरल, प्रभावशाली और सही उच्चारण वाले हों। पूरे गीत में लय-ताल बनी रहे। अवधि के अनुरूप पर्याप्त बोल लिखें। ${extra}`;
+ document.getElementById('music').textContent=`${style}, ${voice}, ${sound}. Create a ${duration} song about ${topic}. Memorable chorus/mukhda repeated many times, clear verse-chorus structure, maintain consistent rhythm, meter, tempo and melody throughout. Expressive vocals, clear pronunciation, professional studio mix, vocals upfront, balanced bass and treble, clean mastering, no clipping or harsh distortion. ${extra}`;
+ document.getElementById('msg').textContent='दोनों prompts तैयार हैं। अब कॉपी करके AI music service में डालें।';
+}
+async function copy(id){let t=document.getElementById(id).textContent;try{await navigator.clipboard.writeText(t);document.getElementById('msg').textContent='कॉपी हो गया।'}catch(e){document.getElementById('msg').textContent='टेक्स्ट चुनें और Copy करें।'}}
+if('serviceWorker' in navigator && location.protocol.startsWith('http')) navigator.serviceWorker.register('./sw.js').catch(()=>{});
+let installPrompt;window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();installPrompt=e;let b=document.getElementById('install');b.hidden=false;b.onclick=async()=>{installPrompt.prompt();await installPrompt.userChoice;installPrompt=null;b.hidden=true;}});
+</script></body></html>
